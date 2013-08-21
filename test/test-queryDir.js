@@ -4,12 +4,19 @@ exports.test = test;
 var queryDir = require('../lib/queryDir.js').queryDir;
 
 function test(scb, fcb) {
-	queryDir('c:/windows/system32', queryDirScb, queryDirFcb);
+	var dir = process.env['SystemRoot'];
+
+	try {
+		queryDir(dir, queryDirScb, queryDirFcb);
+	} catch(err) {
+		// 测试失败
+		fcb();
+	}
 
 	function queryDirScb(dirList, fileList) {
 		if (Array.isArray(dirList) && Array.isArray(fileList)) {
-			printList('[dirList]', dirList);
-			printList('[fileList]', fileList);
+			// 测试通过
+			scb();
 		} else {
 			// 测试失败
 			fcb();
@@ -28,5 +35,3 @@ function test(scb, fcb) {
 		console.log('');
 	}
 }
-
-test();
