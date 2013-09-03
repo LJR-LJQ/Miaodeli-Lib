@@ -1,0 +1,90 @@
+html
+	head
+		meta http-equiv=Content-Type content=text/html;charset=UTF-8
+		meta name=viewport content=width=device-width,initial-scale=1.0
+		title | Miaodeli-Lib Tester
+		script src=wp-fix.js type=text/javascript
+		script src=jquery-1.10.2.min.js type=text/javascript
+		link href=bootstrap/css/bootstrap.min.css rel=stylesheet media=screen
+		link href=bootstrap/css/bootstrap-responsive.min.css rel=stylesheet media=screen
+		script src=bootstrap/js/bootstrap.min.js type=text/javascript
+		link href=index.css rel=stylesheet
+		script src=auto-refresh.js type=text/javascript
+		script src=js/log.js type=text/javascript
+		script src=js/request.js type=text/javascript
+		script src=js/index.js type=text/javascript
+	body
+		div class=test-block
+			div class=test-block-title
+				h4 | upload task list
+			hr
+			table class=`table table-bordered`
+				thead
+					tr
+						th | #id
+						th | filename
+						th | status
+						th | progress
+						th | speed
+				tbody
+					tr
+						td | 1
+						td | test.jpg
+						td | uploading
+						td
+							div class=`progress progress-striped`
+								div class=bar style=`width: 20%`
+						td | 25KB/s
+					tr
+						td | 1
+						td | test.jpg
+						td | uploading
+						td
+							div class=`progress progress-striped`
+								div class=bar style=`width: 20%`
+						td | 25KB/s
+					tr
+						td | 1
+						td | test.jpg
+						td | uploading
+						td
+							div class=`progress progress-striped`
+								div class=bar style=`width: 20%`
+						td | 25KB/s
+
+		div class=test-block
+			div class=test-block-title
+				h4 | query upload task
+			hr
+			input id=query-upload-task-id type=text placeholder=`task id` style=`margin: 0 10px 0 0`
+			a class=btn href=javascript:clickQueryTask(); | query task
+			table class=`table table-bordered` style=`margin-top: 10px;`
+				thead
+					tr
+						th | name
+						th | value
+				tbody id=query-upload-task-output
+
+		div class=test-block
+			div class=test-block-title
+				h4 | upload task control
+			hr
+			div style=`margin-bottom: 15px`
+				input id=create-upload-task-path type=text placeholder=`file path` style=`margin: 0 10px 0 0`
+				a class=btn href=javascript:clickCreateTask(); | create task
+			div style=`margin-bottom: 15px`
+				input id=delete-upload-task-id type=text placeholder=`task id` style=`margin: 0 10px 0 0`
+				a class=btn href=javascript:clickDeleteTask(); | delete task
+			div
+				input id=control-upload-task-id type=text placeholder=`task id` style=`margin: 0 10px 0 0`
+				div class=btn-group
+					a href=javascript:clickStart(); class=btn | start
+					a href=javascript:clickPause(); class=btn | pause
+					a href=javascript:clickResume(); class=btn | resume
+					a href=javascript:clickCancel(); class=btn | cancel
+
+		div class=test-block
+			div class=test-block-title
+				h4 | Log
+			hr
+			div id=log-area class=log-area

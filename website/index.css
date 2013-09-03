@@ -1,0 +1,33 @@
+body {
+	padding-bottom: 40px;
+	background-image: url(img/subtle_white_feathers.png);
+}
+
+.test-block {
+	background-color: white;
+	width: 600px;
+	margin: 0 auto;
+	border: solid 1px #ddd;
+	border-radius: 4px;
+	padding: 20px;
+}
+
+.test-block {
+	margin-top: 40px;
+}
+
+table .progress {
+	margin: 0;
+}
+
+.log-area .info {
+	color: rgb(170, 170, 170);
+}
+
+.log-area .failure {
+	color: #bd362f;
+}
+
+.log-area .success {
+	color: #009400;
+}
