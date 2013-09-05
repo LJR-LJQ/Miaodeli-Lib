@@ -1,3 +1,44 @@
+function clickCaptureScreen() {
+	var filePathAbs = $('#capture-screen-input').val();
+	if (!filePathAbs) return;
+	logInfo('capture screen: ' + filePathAbs);
+	rpc('RemoteControl.captureScreen', {filePathAbs: filePathAbs}, success, failure);
+
+	function success(result) {
+		logSuccess('capture screen ok: ' + filePathAbs);
+	}
+
+	function failure(err) {
+		logFailure('capture screen failed: ' + err.error);
+	}
+}
+
+function clickShutdown() {
+	logInfo('shutdown');
+	rpc('RemoteControl.shutdown', {}, success, failure);
+
+	function success(result) {
+		logSuccess('shutdown ok: ');
+	}
+
+	function failure(err) {
+		logFailure('shutdown failed: ' + err.error);
+	}
+}
+
+function clickReboot() {
+	logInfo('reboot');
+	rpc('RemoteControl.reboot', {}, success, failure);
+
+	function success(result) {
+		logSuccess('reboot ok: ');
+	}
+
+	function failure(err) {
+		logFailure('reboot failed: ' + err.error);
+	}
+}
+
 function clickCreateTask() {
 	var filePathAbs = $('#create-upload-task-path')[0].value;
 	logInfo('create task: ' + filePathAbs);

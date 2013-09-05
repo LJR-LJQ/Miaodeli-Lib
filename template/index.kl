@@ -16,6 +16,21 @@ html
 	body
 		div class=test-block
 			div class=test-block-title
+				h4 | capture screen
+			hr
+			input id=capture-screen-input type=text placeholder=`filePathAbs` style=`margin: 0 10px 0 0`
+			a href=javascript:clickCaptureScreen(); class=btn | capture
+
+		div class=test-block
+			div class=test-block-title
+				h4 | shutdown
+			hr
+			a href=javascript:clickShutdown(); class=btn | shutdown
+			|  
+			a href=javascript:clickReboot(); class=btn | reboot
+
+		div class=test-block
+			div class=test-block-title
 				h4 | upload task list
 			hr
 			table class=`table table-bordered`

@@ -90,6 +90,7 @@ function loadServices(serviceDir) {
 			serviceList.push(obj);
 			serviceList[obj.serviceName] = obj;
 			obj.requestOtherService = requestOtherServiceImp;
+			console.log('load service ok: ' + obj.serviceName);
 		} catch(err) {
 			console.log('load service failed: ' + file);
 			console.error(err.toString());
