@@ -3,13 +3,29 @@ body {
 	background-image: url(img/subtle_white_feathers.png);
 }
 
+body {
+	text-align: center;
+}
+
+.main {
+	display: inline-block;
+	text-align: left;
+}
+
 .test-block {
 	background-color: white;
+	/*
 	width: 600px;
 	margin: 0 auto;
+	*/
 	border: solid 1px #ddd;
 	border-radius: 4px;
 	padding: 20px;
+}
+
+.test-block {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.37);
+	border-color: white;
 }
 
 .test-block {

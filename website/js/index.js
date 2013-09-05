@@ -1,3 +1,69 @@
+function clickCreateFile() {
+	var dirPathAbs = $('#create-file-dirPathAbs').val(),
+		fileName =  $('#create-file-fileName').val();
+
+	logInfo('[create file]');
+	logInfo('dirPathAbs: ' + dirPathAbs);
+	logInfo('fileName: ' + fileName);
+
+	rpc('File.create', {
+		dirPathAbs: dirPathAbs, fileName: fileName
+	}, SuccessFactory('create file'), FailureFactory('create file'));
+}
+
+function clickDeleteFile() {
+	var filePathAbs = $('#delete-file-filePathAbs').val();
+
+	logInfo('[delete file]');
+	logInfo('filePathAbs: ' + filePathAbs);
+
+	rpc('File.delete', {
+		filePathAbs: filePathAbs
+	}, SuccessFactory('delete file'), FailureFactory('delete file'));
+}
+
+function clickRenameFile() {
+	var filePathAbs = $('#rename-file-filePathAbs').val(),
+		newName = $('#rename-file-newName').val();
+
+	logInfo('[rename file]');
+	logInfo('filePathAbs: ' + filePathAbs);
+	logInfo('newName: ' + newName);
+
+	rpc('File.rename', {
+		filePathAbs: filePathAbs,
+		newName: newName
+	}, SuccessFactory('rename file'), FailureFactory('rename file'));
+}
+
+function clickCopyFile() {
+	var srcFilePathAbs = $('#copy-file-srcFilePathAbs').val(),
+		targetFilePathAbs = $('#copy-file-targetFilePathAbs').val();
+
+	logInfo('[copy file]');
+	logInfo('srcFilePathAbs: ' + srcFilePathAbs);
+	logInfo('targetFilePathAbs: ' + targetFilePathAbs);
+
+	rpc('File.copy', {
+		srcFilePathAbs: srcFilePathAbs,
+		targetFilePathAbs: targetFilePathAbs
+	}, SuccessFactory('copy file'), FailureFactory('copy file'));
+}
+
+function clickMoveFile() {
+	var srcFilePathAbs = $('#move-file-srcFilePathAbs').val(),
+		targetFilePathAbs = $('#move-file-targetFilePathAbs').val();
+
+	logInfo('[move file]');
+	logInfo('srcFilePathAbs: ' + srcFilePathAbs);
+	logInfo('targetFilePathAbs: ' + targetFilePathAbs);
+
+	rpc('File.move', {
+		srcFilePathAbs: srcFilePathAbs,
+		targetFilePathAbs: targetFilePathAbs
+	}, SuccessFactory('move file'), FailureFactory('move file'));
+}
+
 function clickCaptureScreen() {
 	var filePathAbs = $('#capture-screen-input').val();
 	if (!filePathAbs) return;
@@ -18,7 +84,7 @@ function clickShutdown() {
 	rpc('RemoteControl.shutdown', {}, success, failure);
 
 	function success(result) {
-		logSuccess('shutdown ok: ');
+		logSuccess('shutdown ok');
 	}
 
 	function failure(err) {
@@ -113,4 +179,16 @@ function clickResume() {
 
 function clickCancel() {
 	alert('cancel');
+}
+
+function SuccessFactory(title) {
+	return function() {
+		logSuccess('[' + title + '] successed');
+	}
+}
+
+function FailureFactory(title) {
+	return function(err) {
+		logFailure('[' + title + '] failed: ' + err.error);
+	}
 }
