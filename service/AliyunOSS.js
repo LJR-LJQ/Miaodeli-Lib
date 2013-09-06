@@ -5,11 +5,31 @@ exports.queryUploadTask = queryUploadTask;
 exports.start = start;
 exports.pause = pause;
 exports.resume = resume;
-exports.stop = stop;
+exports.cancel = cancel;
 
+// [模块]
+var uploadFile = require('./AliyunOSS/lib/uploadFile').uploadFile;
+
+// [变量]
 var idCount = 0;
 var uploadTaskHeap = {};
 var uploadTaskList = [];
+
+function simpleCopy(uploadTask) {
+	var copy = {
+		id: uploadTask.id,
+		filePathAbs: uploadTask.filePathAbs
+	};
+
+	if (uploadTask.uploader) {
+		var uploader = uploadTask.uploader;
+		copy.state = uploader.state;
+		copy.errorOccursed = uploader.errorOccursed;
+		copy.bytesSended = uploader.bytesSended;
+	}
+
+	return copy;
+}
 
 // args
 // - filePathAbs
@@ -80,8 +100,10 @@ function queryUploadTask(args, callback) {
 
 	// 如果找不到对应的任务，返回错误提示
 	findUploadTaskEx(uploadTaskId, function(uploadTask) {
-		// 找到了，直接把整个任务信息返回
-		callback(uploadTask);
+		// 找到了，但是不能直接返回整个任务信息
+		// 而是有所精简
+		var uploadTaskSimple = simpleCopy(uploadTask);
+		callback(uploadTaskSimple);
 	}, callback);
 }
 
@@ -89,19 +111,62 @@ function queryUploadTask(args, callback) {
 // - uploadTaskId
 // res
 function start(args, callback) {
-	callback({});
+	var uploadTaskId,
+		uploadTask;
+
+	uploadTaskId = args.uploadTaskId;
+	findUploadTaskEx(uploadTaskId, function(_uploadTask) {
+		uploadTask = _uploadTask;
+		if (uploadTask.uploader) {
+			callback({error: 'repetition starting'});
+			return;
+		}
+
+		var filePathAbs = uploadTask.filePathAbs;
+		uploadFile(filePathAbs, uploadFileSuccess, uploadFileFailure);
+
+	}, callback);
+
+	function uploadFileSuccess(uploader) {
+		uploadTask.uploader = uploader;
+		uploader.start();
+		callback({});
+	}
+
+	function uploadFileFailure() {
+		callback({error: 'unknown'});
+	}
+
 }
 
-function stop(args, callback) {
-	callback({});
+function cancel(args, callback) {
+	var uploadTaskId;
+
+	uploadTaskId = args.uploadTaskId;
+	findUploadTaskEx(uploadTaskId, function(uploadTask) {
+		uploadTask.uploader.cancel();
+		callback({});
+	}, callback);
 }
 
 function pause(args, callback) {
-	callback({});
+	var uploadTaskId;
+
+	uploadTaskId = args.uploadTaskId;
+	findUploadTaskEx(uploadTaskId, function(uploadTask) {
+		uploadTask.uploader.pause();
+		callback({});
+	}, callback);
 }
 
 function resume(args, callback) {
-	callback({});
+	var uploadTaskId;
+
+	uploadTaskId = args.uploadTaskId;
+	findUploadTaskEx(uploadTaskId, function(uploadTask) {
+		uploadTask.uploader.resume();
+		callback({});
+	}, callback);
 }
 
 // 内部使用的函数

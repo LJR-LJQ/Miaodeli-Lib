@@ -181,4 +181,4 @@ html
 					div class=test-block-title
 						h4 | Log
 					hr
-					div id=log-area class=log-area
+					div id=log-area class=`log-area`

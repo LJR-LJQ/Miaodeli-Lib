@@ -237,15 +237,45 @@ function clickStart() {
 }
 
 function clickPause() {
-	alert('pause');
+	var id = $('#control-upload-task-id').val();
+	logInfo('pause task: ' + id);
+	rpc('AliyunOSS.pause', {uploadTaskId: id}, pause_success, pause_failure);
+
+	function pause_success(result) {
+		logSuccess('pause task ok: ' + id);
+	}
+
+	function pause_failure(err) {
+		logFailure('pause task failed: ' + err.error);
+	}
 }
 
 function clickResume() {
-	alert('resume');
+	var id = $('#control-upload-task-id').val();
+	logInfo('resume task: ' + id);
+	rpc('AliyunOSS.resume', {uploadTaskId: id}, resume_success, resume_failure);
+
+	function resume_success(result) {
+		logSuccess('resume task ok: ' + id);
+	}
+
+	function resume_failure(err) {
+		logFailure('resume task failed: ' + err.error);
+	}
 }
 
 function clickCancel() {
-	alert('cancel');
+	var id = $('#control-upload-task-id').val();
+	logInfo('cancel task: ' + id);
+	rpc('AliyunOSS.cancel', {uploadTaskId: id}, cancel_success, cancel_failure);
+
+	function cancel_success(result) {
+		logSuccess('cancel task ok: ' + id);
+	}
+
+	function cancel_failure(err) {
+		logFailure('cancel task failed: ' + err.error);
+	}
 }
 
 function SuccessFactory(title) {

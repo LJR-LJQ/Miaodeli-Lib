@@ -47,7 +47,7 @@ function rename(args, callback) {
 	}
 }
 
-function copy(args, callback) {debugger;
+function copy(args, callback) {
 	copyDir(args.srcDirPathAbs, args.targetDirPathAbs, success, function(){}, failure);
 	
 	function success() {
