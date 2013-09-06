@@ -18,6 +18,44 @@ html
 			div class=span6
 				div class=test-block
 					div class=test-block-title
+						h4 | Manage Directory
+					hr
+
+					input id=create-dir-dirPathAbs type=text placeholder=`dirPathAbs`
+					|  
+					input id=create-dir-dirName type=text placeholder=`dirName`
+					br
+					a href=javascript:clickCreateDir(); class=btn | create dir
+					hr
+
+					input id=delete-dir-dirPathAbs type=text placeholder=`dirPathAbs`
+					br
+					a href=javascript:clickDeleteDir(); class=btn | delete dir
+					hr
+
+					input id=rename-dir-dirPathAbs type=text placeholder=`dirPathAbs`
+					|  
+					input id=rename-dir-newName type=text placeholder=`newName`
+					br
+					a href=javascript:clickRenameDir(); class=btn | rename dir
+					hr
+
+					input id=copy-dir-srcDirPathAbs type=text placeholder=`srcDirPathAbs`
+					|  
+					input id=copy-dir-targetDirPathAbs type=text placeholder=`targetDirPathAbs`
+					br
+					a href=javascript:clickCopyDir(); class=btn | copy dir
+					hr
+
+					input id=move-dir-srcDirPathAbs type=text placeholder=`srcDirPathAbs`
+					|  
+					input id=move-dir-targetDirPathAbs type=text placeholder=`targetDirPathAbs`
+					br
+					a href=javascript:clickMoveDir(); class=btn | move dir
+					hr
+
+				div class=test-block
+					div class=test-block-title
 						h4 | Manage File
 					hr
 

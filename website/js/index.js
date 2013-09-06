@@ -1,3 +1,48 @@
+function clickCreateDir() {
+	var dirPathAbs = $('#create-dir-dirPathAbs').val();
+	var dirName = $('#create-dir-dirName').val();
+
+	logInfo('[create dir]');
+	logInfo('dirPathAbs: ' + dirPathAbs);
+	logInfo('dirName: ' + dirName);
+
+
+}
+
+function clickDeleteDir() {
+	var dirPathAbs = $('#delete-dir-dirPathAbs').val();
+
+	logInfo('[delete dir]');
+	logInfo('dirPathAbs: ' + dirPathAbs);
+}
+
+function clickRenameDir() {
+	var dirPathAbs = $('#rename-dir-dirPathAbs').val();
+	var newName = $('#rename-dir-newName').val();
+
+	logInfo('[rename dir]');
+	logInfo('dirPathAbs: ' + dirPathAbs);
+	logInfo('newName: ' + newName);
+}
+
+function clickCopyDir() {
+	var srcDirPathAbs = $('#copy-dir-srcDirPathAbs').val();
+	var targetDirPathAbs = $('#copy-dir-targetDirPathAbs').val();
+
+	logInfo('[copy dir]');
+	logInfo('srcDirPathAbs: ' + srcDirPathAbs);
+	logInfo('targetDirPathAbs: ' + targetDirPathAbs);
+}
+
+function clickMoveDir() {
+	var srcDirPathAbs = $('#move-dir-srcDirPathAbs').val();
+	var targetDirPathAbs = $('#move-dir-targetDirPathAbs').val();
+
+	logInfo('[move dir]');
+	logInfo('srcDirPathAbs: ' + srcDirPathAbs);
+	logInfo('targetDirPathAbs: ' + targetDirPathAbs);
+}
+
 function clickCreateFile() {
 	var dirPathAbs = $('#create-file-dirPathAbs').val(),
 		fileName =  $('#create-file-fileName').val();
