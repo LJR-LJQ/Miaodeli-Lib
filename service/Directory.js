@@ -13,33 +13,65 @@ var createDir = require('../lib/createDir').createDir,
 
 function create(args, callback) {
 	createDir(args.dirPathAbs, args.dirName, success, failure);
+
+	function success() {
+		callback({});
+	}
+
+	function failure() {
+		callback({error: 'unknwon'});
+	}
 }
 
 function _delete(args, callback) {
-	deleteDir(args.filePathAbs, success, function(){}, failure);
+	deleteDir(args.dirPathAbs, success, function(){}, failure);
+	
+	function success() {
+		callback({});
+	}
+
+	function failure() {
+		callback({error: 'unknwon'});
+	}
 }
 
 function rename(args, callback) {
 	renameDir(args.dirPathAbs, args.newName, success, failure);
+	
+	function success() {
+		callback({});
+	}
+
+	function failure() {
+		callback({error: 'unknwon'});
+	}
 }
 
-function copy(args, callback) {
-	copyFile(args.srcDirPathAbs, args.targetDirPathAbs, success, function(){}, failure);
+function copy(args, callback) {debugger;
+	copyDir(args.srcDirPathAbs, args.targetDirPathAbs, success, function(){}, failure);
+	
+	function success() {
+		callback({});
+	}
+
+	function failure() {
+		callback({error: 'unknwon'});
+	}
 }
 
 function move(args, callback) {
-	moveFile(args.srcDirPathAbs, args.targetDirPathAbs, success, empty, empty, failure);
+	moveDir(args.srcDirPathAbs, args.targetDirPathAbs, success, empty, empty, failure);
 
 	function empty() {
 
 	}
+	
+	function success() {
+		callback({});
+	}
+
+	function failure() {
+		callback({error: 'unknwon'});
+	}
 }
 
-
-function success() {
-	callback({});
-}
-
-function failure() {
-	callback({error: 'unknwon'});
-}

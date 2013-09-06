@@ -61,7 +61,8 @@ function dispatch(req, callback, _rawReq, _rawRes) {
 		try {
 			service[func](args, callback, _rawReq, _rawRes);
 		} catch(err) {
-			safeCall(callback, {error: 'function internal error'});
+			safeCall(callback, {error: 'function internal error > ' + err.toString()});
+			console.log(err.stack);
 		}
 
 	} else {

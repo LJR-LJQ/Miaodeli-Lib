@@ -6,7 +6,10 @@ function clickCreateDir() {
 	logInfo('dirPathAbs: ' + dirPathAbs);
 	logInfo('dirName: ' + dirName);
 
-
+	rpc('Directory.create', {
+		dirPathAbs: dirPathAbs,
+		dirName: dirName
+	}, SuccessFactory('create dir'), FailureFactory('create dir'));
 }
 
 function clickDeleteDir() {
@@ -14,6 +17,10 @@ function clickDeleteDir() {
 
 	logInfo('[delete dir]');
 	logInfo('dirPathAbs: ' + dirPathAbs);
+
+	rpc('Directory.delete', {
+		dirPathAbs: dirPathAbs
+	}, SuccessFactory('delete dir'), FailureFactory('delete dir'));
 }
 
 function clickRenameDir() {
@@ -23,6 +30,11 @@ function clickRenameDir() {
 	logInfo('[rename dir]');
 	logInfo('dirPathAbs: ' + dirPathAbs);
 	logInfo('newName: ' + newName);
+
+	rpc('Directory.rename', {
+		dirPathAbs: dirPathAbs,
+		newName: newName
+	}, SuccessFactory('rename dir'), FailureFactory('rename dir'));
 }
 
 function clickCopyDir() {
@@ -32,6 +44,11 @@ function clickCopyDir() {
 	logInfo('[copy dir]');
 	logInfo('srcDirPathAbs: ' + srcDirPathAbs);
 	logInfo('targetDirPathAbs: ' + targetDirPathAbs);
+
+	rpc('Directory.copy', {
+		srcDirPathAbs: srcDirPathAbs,
+		targetDirPathAbs: targetDirPathAbs
+	}, SuccessFactory('copy dir'), FailureFactory('copy dir'));
 }
 
 function clickMoveDir() {
@@ -41,6 +58,11 @@ function clickMoveDir() {
 	logInfo('[move dir]');
 	logInfo('srcDirPathAbs: ' + srcDirPathAbs);
 	logInfo('targetDirPathAbs: ' + targetDirPathAbs);
+
+	rpc('Directory.move', {
+		srcDirPathAbs: srcDirPathAbs,
+		targetDirPathAbs: targetDirPathAbs
+	}, SuccessFactory('move dir'), FailureFactory('move dir'));
 }
 
 function clickCreateFile() {
