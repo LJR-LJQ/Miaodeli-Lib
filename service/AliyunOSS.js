@@ -15,22 +15,6 @@ var idCount = 0;
 var uploadTaskHeap = {};
 var uploadTaskList = [];
 
-function simpleCopy(uploadTask) {
-	var copy = {
-		id: uploadTask.id,
-		filePathAbs: uploadTask.filePathAbs
-	};
-
-	if (uploadTask.uploader) {
-		var uploader = uploadTask.uploader;
-		copy.state = uploader.state;
-		copy.errorOccursed = uploader.errorOccursed;
-		copy.bytesSended = uploader.bytesSended;
-	}
-
-	return copy;
-}
-
 // args
 // - filePathAbs
 // res
@@ -105,6 +89,28 @@ function queryUploadTask(args, callback) {
 		var uploadTaskSimple = simpleCopy(uploadTask);
 		callback(uploadTaskSimple);
 	}, callback);
+
+	function simpleCopy(uploadTask) {
+		var copy = {
+			id: uploadTask.id,
+			filePathAbs: uploadTask.filePathAbs
+		};
+
+		if (uploadTask.uploader) {
+			var uploader = uploadTask.uploader;
+			copy.state = uploader.state;
+			copy.errorOccursed = uploader.errorOccursed;
+			copy.bytesSended = calcBytesSended();
+			copy.totalBytes = uploader.totalBytes;
+		}
+
+		return copy;
+
+		function calcBytesSended() {
+			// 这里是通过查询请求对应的套接字上的属性来实现的
+			return uploadTask.uploader.writeStream.socket.bytesWritten;
+		}
+	}
 }
 
 // args

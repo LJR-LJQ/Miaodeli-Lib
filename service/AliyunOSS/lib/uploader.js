@@ -26,16 +26,9 @@ function Uploader(readStream, writeStream) {
 
 	this.state = 'stop';
 	this.errorOccursed = false;
-	this.bytesSended = 0;
-	this.interval = undefined;	// 测速时使用的定时器
 
 	this.readStream = readStream;
 	this.writeStream = writeStream;
-
-	this.onSpeed = undefined;
-	this.onCancel = undefined;
-	this.onFinish = undefined;
-	this.onError = undefined;
 }
 
 Uploader.prototype.start = function() {
@@ -45,31 +38,25 @@ Uploader.prototype.start = function() {
 	this.setStart();
 
 	this.readStream.on('data', _onData);
-	this.writeStream.on('finish', _onFinish);
-	this.writeStream.on('unpipe', _onUnpipe);
-
-	this.writeStream.on('error', _onError);
 	this.readStream.on('error', _onError);
+
+	this.writeStream.on('finish', _onFinish);
+	this.writeStream.on('error', _onError);
 
 	// 开始发送
 	this.readStream.pipe(this.writeStream);
 
 	function _onData(chunk) {
-		self.bytesSended += chunk.length;
+		console.log(chunk.length + ' Bytes read');
+		
 	}
 
 	function _onFinish() {
 		self.setFinish();
-		safeCall(self.onFinish);
 	}
 
 	function _onError(err) {
 		self.errorOccursed = true;
-		safeCall(self.onError, [err]);
-	}
-
-	function _onUnpipe() {
-		safeCall(self.onCancel);
 	}
 }
 
@@ -91,30 +78,8 @@ Uploader.prototype.cancel = function() {
 	this.setCancel();
 
 	this.readStream.unpipe(this.writeStream);
-}
-
-Uploader.prototype.enableSpeedCallback = function() {
-	// 如果已经启用了，就什么也不做
-	if (this.interval !== undefined) return;
-
-	var self = this;
-	var freq = 1000; // 定时器间隔
-
-	var lastBytesSended = 0;
-	this.interval = setInterval(function() {
-		var delt = self.bytesSended - lastBytesSended;
-		lastBytesSended = self.bytesSended;
-
-		var speed = (delt * 1000) / freq; // 转换成每秒速度
-		safeCall(self.onSpeed, [lastBytesSended, speed]);
-	}, freq);
-}
-
-Uploader.prototype.disableSpeedCallback = function() {
-	// 如果没有启用，就什么也不做
-	if (this.interval === undefined) return;
-	clearInterval(this.interval);
-	this.interval = undefined;
+	// 这里可能还需要停掉 readStream 和结束 writeStream
+	// TODO
 }
 
 // 用于判断当前状态的一系列函数
@@ -160,23 +125,3 @@ Uploader.prototype.setCancel = function() {
 Uploader.prototype.setFinish = function() {
 	this.state = 'finish';
 }
-
-// test
-
-// var fs = require('fs'),
-// 	path = require('path');
-// var iFile = path.resolve(__dirname, '../', 'test.rar'),
-// 	oFile = path.resolve(__dirname, '../', 'test-copy.rar');
-
-// var rsFile = fs.createReadStream(iFile),
-// 	wsFile = fs.createWriteStream(oFile);
-
-// var uploader = create(rsFile, wsFile);
-// uploader.onFinish = function() {
-// 	console.log('finish');
-// }
-// uploader.onSpeed = function(copiedBytes, speed) {
-// 	console.log(speed);
-// }
-// uploader.start();
-// uploader.enableSpeedCallback();

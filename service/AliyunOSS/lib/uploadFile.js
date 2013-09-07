@@ -58,6 +58,8 @@ function uploadFile(fileName, scb, fcb) {
 		function signSuccess(req) {
 			var fileReadStream = fs.createReadStream(fileName);
 			var uploader = Uploader.create(fileReadStream, req);
+			// 补充一个 totalBytes 属性，用于描述文件尺寸
+			uploader.totalBytes = fileSize;
 			safeCall(scb, [uploader]);
 		}
 
