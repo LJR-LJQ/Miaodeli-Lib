@@ -16,3 +16,4 @@ exports.retriveFileInfo = require('./lib/retriveFileInfo').retriveFileInfo;
 exports.search = require('./lib/search').search;
 exports.updateDirInfo = require('./lib/updateDirInfo').updateDirInfo;
 exports.updateFileInfo = require('./lib/updateFileInfo').updateFileInfo;
+exports.isWindows = require('./lib/isWindows').isWindows;
